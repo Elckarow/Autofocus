@@ -118,7 +118,10 @@ python early in autofocus:
             self.previous = UNFOCUSED
             self.target = UNFOCUSED            
 
+    renpy_display_scenelists = renpy.display.scenelists
     renpy_display_core = renpy.display.core
+
+    layer_thing = renpy_display_scenelists if renpy.version_tuple >= ((7, 7) if renpy.compat.PY2 else (8, 2)) else renpy_display_core
 
     class _ComputeFocus(renpy.Displayable):
         def __init__(self, tag):
@@ -129,7 +132,7 @@ python early in autofocus:
             current_time = time.time()
             
             showing_tags = set()
-            for layer in renpy_display_core.layers:
+            for layer in layer_thing.layers:
                 showing_tags |= renpy.get_showing_tags(layer)
 
             tag = self.tag
