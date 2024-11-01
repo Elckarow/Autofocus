@@ -162,12 +162,13 @@ python early in autofocus:
 
             return renpy.Render(0, 0)
 
-    config.per_frame_screens.append("_compute_autofocus")
-    config.always_shown_screens.append("_compute_autofocus")
-
 screen _compute_autofocus():
     for t in autofocus._autofocus_map:
         add autofocus._ComputeFocus(t)
+
+init python:
+    config.per_frame_screens.append("_compute_autofocus")
+    config.always_shown_screens.append("_compute_autofocus")
 
 default autofocus._autofocus_map = { }
 default autofocus._force_focus = set()
